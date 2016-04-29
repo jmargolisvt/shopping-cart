@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MWG-UI Project</title>
+    <link rel ="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/base.css" />
+  </head>
+  <body>
+    <div id="products" class="pull-left"></div>
+     <script id="products-template" type="text/x-handlebars-template">
+          {{#each}}
+          <div class="panel panel-default">
+            {{#with this.ImageLinks}}
+              <img class="product center-block" src={{this.[0].Uri}} />
+            {{/with}}
+            <p><b>{{this.Brand}} {{this.Name}}</b></p>
+            {{#if this.Sale}}
+              <p class="saleItem">{{this.CurrentPrice}} On Sale!</p>
+            {{else}}
+              <p>{{this.CurrentPrice}}</p>
+            {{/if}}
+
+            {{#if this.InCart}}
+            <div class="btn btn-danger center-block" data-sku={{this.Sku}}>Remove from Cart</div>
+            {{else}}
+            <div class="btn btn-success center-block" data-sku={{this.Sku}}>Add to Cart</div>
+            {{/if}}
+
+          </div>
+          {{/each}}
+    </script>
+
+    <div id="cart" class="pull-left panel panel-default"></div>
+    <script id="cart-template" type="text/x-handlebars-template">
+      <h2 class="panel-heading text-center">My Cart</h2>
+      <div class="panel-body">
+          {{#each}}
+          <div class="panel panel-default">
+            {{this.Brand}} {{this.Name}}
+            {{this.CurrentPrice}}
+          </div>
+          {{/each}}
+      </div>
+    </script>
+
+    <script type="text/babel" src="js/main.js"></script>
+    <script type="text/javascript" src="js/lodash.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  </body>
+</html>

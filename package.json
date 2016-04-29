@@ -1,0 +1,22 @@
+{
+  "name": "mwg-ui-project",
+  "version": "0.0.0",
+  "description": "A sample UI project in Node and React.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "jmargolisvt",
+  "engines": {
+    "node": "5.5.0",
+    "npm": "3.3.x"
+  }
+}

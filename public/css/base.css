@@ -1,0 +1,56 @@
+/*** general ***/
+body {
+  background: lemonchiffon;
+}
+
+h1{
+  background: beige;
+  padding: 2%;
+  border: 1px solid black;
+}
+
+/*** products ***/
+#products .panel{
+  width: 30%;
+  height: 300px;
+  float: left;
+  min-width: 125px;
+}
+
+.panel {
+  padding: 2%;
+  margin: 1%;
+  position: relative;
+}
+
+#products {
+  width: 70%;
+}
+
+.product {
+  width: 40%;
+  min-width: 80px;
+}
+
+.btn {
+   position: absolute;
+   bottom: 3%;
+   width: 87%;
+ }
+
+/*** cart ***/
+
+#cart {
+  width: 25%;
+}
+.saleItem {
+  color: red;
+}
+
+/*** media queries ***/
+
+@media (max-width: 600px) {
+ .pull-left, .btn {font-size: 0.8em;}
+ #cart {padding: 1%;}
+ #products .panel {height: 250px;}
+}
