@@ -43,7 +43,7 @@ function loadCart() {
       if (xhr.readyState == 4 && xhr.status == 200){
         cart = JSON.parse(this.responseText);
         cartPlaceholder.innerHTML = cartTemplate(cart);
-        updateCart();
+        initializeCart();
         addHandlers();
       } else {
         console.log("No repsonse from server.");
@@ -51,7 +51,7 @@ function loadCart() {
     }
 }
 
-function updateCart(){
+function initializeCart(){
   let cartSkus = [];
 
   //get all the skus of items in the cart
@@ -103,7 +103,5 @@ function addHandlers(){
     });
   };
 }
-
-
 
 loadProducts();

@@ -10,7 +10,7 @@
     <div id="products" class="pull-left"></div>
      <script id="products-template" type="text/x-handlebars-template">
           {{#each}}
-          <div class="panel panel-default">
+          <div class="panel panel-default pull-left">
             {{#with this.ImageLinks}}
               <img class="product center-block" src={{this.[0].Uri}} />
             {{/with}}
@@ -21,24 +21,32 @@
               <p>{{this.CurrentPrice}}</p>
             {{/if}}
 
-            {{#if this.InCart}}
-            <div class="btn btn-danger center-block" data-sku={{this.Sku}}>Remove from Cart</div>
+            {{#if this.InStock}}
+              {{#if this.InCart}}
+              <div class="btn btn-danger center-block" data-sku={{this.Sku}}>Remove from Cart</div>
+              {{else}}
+              <div class="btn btn-success center-block" data-sku={{this.Sku}}>Add to Cart</div>
+              {{/if}}
             {{else}}
-            <div class="btn btn-success center-block" data-sku={{this.Sku}}>Add to Cart</div>
+              <div class="btn center-block" data-sku={{this.Sku}}>Out of Stock</div>
             {{/if}}
 
           </div>
           {{/each}}
     </script>
 
-    <div id="cart" class="pull-left panel panel-default"></div>
+    <div id="cart" class="pull-right panel panel-default"></div>
     <script id="cart-template" type="text/x-handlebars-template">
       <h2 class="panel-heading text-center">My Cart</h2>
       <div class="panel-body">
           {{#each}}
           <div class="panel panel-default">
             {{this.Brand}} {{this.Name}}
-            {{this.CurrentPrice}}
+            {{#if this.Sale}}
+              <span class="saleItem pull-right">{{this.CurrentPrice}}</span>
+            {{else}}
+              <span class="pull-right">{{this.CurrentPrice}}</span>
+            {{/if}}
           </div>
           {{/each}}
       </div>

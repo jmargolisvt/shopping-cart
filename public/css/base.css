@@ -9,11 +9,23 @@ h1{
   border: 1px solid black;
 }
 
+h2 {
+  margin-top: 0;
+}
+
+p {
+  font-size: 1.1em;
+}
+
+.saleItem {
+  color: red;
+}
+
 /*** products ***/
+
 #products .panel{
   width: 30%;
   height: 300px;
-  float: left;
   min-width: 125px;
 }
 
@@ -21,6 +33,7 @@ h1{
   padding: 2%;
   margin: 1%;
   position: relative;
+  overflow: hidden;
 }
 
 #products {
@@ -36,6 +49,7 @@ h1{
    position: absolute;
    bottom: 3%;
    width: 87%;
+   font-weight: bold;
  }
 
 /*** cart ***/
@@ -43,14 +57,72 @@ h1{
 #cart {
   width: 25%;
 }
-.saleItem {
-  color: red;
+
+#cart.panel{
+  padding: 0;
+}
+
+.panel-default>.panel-heading {
+    background: #f5f5f5;
+    background: linear-gradient(#f5f5f5, #bbb);
 }
 
 /*** media queries ***/
 
-@media (max-width: 600px) {
- .pull-left, .btn {font-size: 0.8em;}
- #cart {padding: 1%;}
- #products .panel {height: 250px;}
+@media (max-width: 1000px) {
+ #products, #cart, .btn {
+   font-size: 0.8em;
+ }
+
+ p {
+   margin: 0;
+ }
+
+ #cart {
+   width: 30%;
+ }
+
+ #products {
+   width: 68%;
+ }
+
+ #products .panel {
+   height: 250px;
+ }
+}
+
+
+@media (max-width: 602px) {
+ #cart {
+   padding: 1%;
+   width: 40%;
+ }
+
+ #cart .panel {
+   font-size: 0.8em;
+ }
+
+ #products {
+   width: 58%;
+ }
+
+ #products .panel {
+   height: 250px;
+   width: 45%;
+ }
+}
+
+@media (max-width: 465px) {
+ #cart {
+   width: 48%;
+ }
+
+ #products {
+   width: 50%;
+ }
+
+ #products .panel {
+   width: 100%;
+   height: 225px;
+ }
 }
