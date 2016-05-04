@@ -60,8 +60,8 @@ function initializeCart(){
   }
 
   //figure out what's in the cart
-  _.map(products, function(x) {
-    if (_.indexOf(cartSkus, x.Sku) !== -1) {x.InCart = true;}
+  products.map(function(x) {
+    if (cartSkus.indexOf(x.Sku) !== -1) {x.InCart = true;}
   });
 
   //update the DOM
@@ -75,10 +75,10 @@ function addHandlers(){
   for(var i=0; i<x.length; i++){
     x[i].addEventListener("click", function(){
       let item = this.getAttribute('data-sku');
+      let el = products.filter(function(x){ return x.Sku == item});
 
-      let el = _.find(products, function(x){ return x.Sku == item});
-      el.InCart = true;
-      cart.push(el);
+      el[0].InCart = true;
+      cart.push(el[0]);
 
       productsPlaceholder.innerHTML = productsTemplate(products);
       cartPlaceholder.innerHTML = cartTemplate(cart);
@@ -92,10 +92,17 @@ function addHandlers(){
   for(var i=0; i<y.length; i++){
     y[i].addEventListener("click", function(){
       let item = this.getAttribute('data-sku');
+      let el = products.filter(function(x){ return x.Sku == item});
 
-      let el = _.find(products, function(x){ return x.Sku == item});
-      _.remove(cart, function(x) {return x.Sku == el.Sku});
-      el.InCart = false;
+        for(var i = 0; i < cart.length; i++) {
+            var cartItem = cart[i];
+
+            if (cartItem.Sku == el[0].Sku) {
+                  cart.splice(i, 1);
+            }
+        }
+
+      el[0].InCart = false;
 
       productsPlaceholder.innerHTML = productsTemplate(products);
       cartPlaceholder.innerHTML = cartTemplate(cart);

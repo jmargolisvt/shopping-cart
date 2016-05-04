@@ -1,6 +1,6 @@
 # MWG-UI project
 
-A sample UI project in Node and React.
+A sample UI project.
 
 ### Node
 
