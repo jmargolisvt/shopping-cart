@@ -1,4 +1,4 @@
-# MWG-UI project
+# Shopping Cart UI project
 
 A sample UI project.
 

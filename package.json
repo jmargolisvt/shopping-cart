@@ -1,7 +1,7 @@
 {
   "name": "mwg-ui-project",
   "version": "0.0.0",
-  "description": "A sample UI project in Node and React.",
+  "description": "A responsive shopping cart example using Node, Handlebars, and Bootstrap.",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.4.3",

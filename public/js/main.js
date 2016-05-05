@@ -9,11 +9,11 @@ let cartSource = document.getElementById('cart-template').innerHTML,
         cartTemplate = Handlebars.compile(cartSource),
         cartPlaceholder = document.getElementById('cart');
 
-function loadProducts() {
+function callAPI (endpoint, callback) {
    let xhr = new XMLHttpRequest();
 
    try {
-      xhr.open("GET", "/api/products", true);
+      xhr.open("GET", "/api/" + endpoint, true);
       xhr.send();
     } catch (e) {
       console.log("Error: " + e);
@@ -21,34 +21,29 @@ function loadProducts() {
 
     xhr.onreadystatechange = function(){
       if (xhr.readyState == 4 && xhr.status == 200){
-        products = JSON.parse(this.responseText);
-        loadCart();
+        callback(this);
       } else {
         console.log("No repsonse from server.");
       }
     }
 }
 
+function loadProducts() {
+  var callback = function(xhr) {
+          products = JSON.parse(xhr.responseText);
+          loadCart();
+  };
+  callAPI("products", callback);
+}
+
 function loadCart() {
-  let xhr = new XMLHttpRequest();
-
-   try {
-      xhr.open("GET", "/api/cart", true);
-      xhr.send();
-    } catch (e) {
-      console.log("Error: " + e);
-    };
-
-    xhr.onreadystatechange = function(){
-      if (xhr.readyState == 4 && xhr.status == 200){
-        cart = JSON.parse(this.responseText);
+  var callback = function(xhr) {
+        cart = JSON.parse(xhr.responseText);
         cartPlaceholder.innerHTML = cartTemplate(cart);
         initializeCart();
         addHandlers();
-      } else {
-        console.log("No repsonse from server.");
-      }
-    }
+  };
+  callAPI("cart", callback);
 }
 
 function initializeCart(){
@@ -69,20 +64,28 @@ function initializeCart(){
 }
 
 function addHandlers(){
+
+  function getSkus(e) {
+      let item = e.target.getAttribute('data-sku');
+      let el = products.filter(function(x){ return x.Sku == item});
+      return el;
+  }
+
+  function updateDOM() {
+      productsPlaceholder.innerHTML = productsTemplate(products);
+      cartPlaceholder.innerHTML = cartTemplate(cart);
+      addHandlers();
+  }
+
   // add the "Add to Cart" event handlers
   let x = document.getElementsByClassName('btn-success');
 
   for(var i=0; i<x.length; i++){
-    x[i].addEventListener("click", function(){
-      let item = this.getAttribute('data-sku');
-      let el = products.filter(function(x){ return x.Sku == item});
-
+    x[i].addEventListener("click", function(e){
+      var el = getSkus(e);
       el[0].InCart = true;
       cart.push(el[0]);
-
-      productsPlaceholder.innerHTML = productsTemplate(products);
-      cartPlaceholder.innerHTML = cartTemplate(cart);
-      addHandlers();
+      updateDOM();
     });
   };
 
@@ -90,23 +93,17 @@ function addHandlers(){
   let y = document.getElementsByClassName('btn-danger');
 
   for(var i=0; i<y.length; i++){
-    y[i].addEventListener("click", function(){
-      let item = this.getAttribute('data-sku');
-      let el = products.filter(function(x){ return x.Sku == item});
+    y[i].addEventListener("click", function(e){
+       var el = getSkus(e);
 
-        for(var i = 0; i < cart.length; i++) {
-            var cartItem = cart[i];
-
-            if (cartItem.Sku == el[0].Sku) {
+       for(var i = 0; i < cart.length; i++) {
+           var cartItem = cart[i];
+           if (cartItem.Sku == el[0].Sku) {
                   cart.splice(i, 1);
-            }
+           }
         }
-
       el[0].InCart = false;
-
-      productsPlaceholder.innerHTML = productsTemplate(products);
-      cartPlaceholder.innerHTML = cartTemplate(cart);
-      addHandlers();
+      updateDOM();
     });
   };
 }
